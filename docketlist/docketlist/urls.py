@@ -18,6 +18,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
@@ -28,7 +30,7 @@ urlpatterns = [
     path('api/schema/redoc/',
          SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     path('admin/', admin.site.urls),
-    path('auth/', include('rest_framework.urls')),
     path('api/', include('todo_list.urls')),
     path('api/account/', include('account.urls')),
-]
+    # A big question yes, coz only for debug
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
