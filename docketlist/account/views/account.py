@@ -9,10 +9,3 @@ from rest_framework import generics
 class AccountRegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = AccountRegisterSerializer
-
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        token, create = Token.objects.get_or_create(
-            user_id=response.data['id'])
-        response.data["token"] = str(token)
-        return response
